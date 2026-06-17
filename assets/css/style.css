@@ -2109,11 +2109,6 @@ blockquote { font-style: italic; }
   .testimonial-card { padding: 1.5rem; }
   .testimonial-card__text { font-size: 0.875rem; }
 
-  /* ── Vídeo Institucional ── */
-  .video-institucional__wrapper { grid-template-columns: 1fr; }
-  .video-institucional__highlights { display: none; }
-  .video-player__play-btn { width: 64px; height: 64px; }
-
   /* ── CTA ── */
   .cta-section { padding: 4rem 0; }
   .cta-section__title { font-size: clamp(1.5rem, 6vw, 2.2rem); }
@@ -2666,12 +2661,47 @@ blockquote { font-style: italic; }
   line-height: 1.4;
 }
 
-/* Responsive video section — já tratado no bloco principal de media queries */
+/* ══════════════════════════════════════════════
+   RESPONSIVIDADE — VÍDEO INSTITUCIONAL
+   (deve vir APÓS os estilos base para sobrescrever corretamente)
+══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .video-institucional__wrapper { grid-template-columns: 1fr 280px; }
 }
 
-/* Hero video: mais opaco em mobile para garantir legibilidade do texto */
+@media (max-width: 900px) {
+  .video-institucional__wrapper { grid-template-columns: 1fr; }
+  .video-institucional__highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .video-institucional__highlights-list {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .video-institucional__highlights-list li { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .video-institucional__highlights-title { grid-column: 1 / -1; margin-bottom: 0.75rem; }
+}
+
 @media (max-width: 768px) {
   .hero__video { opacity: 0.2; }
+  .video-institucional__wrapper { grid-template-columns: 1fr; }
+  .video-institucional__highlights { display: none; }
+  .video-player { aspect-ratio: 16 / 9; min-height: 200px; }
+  .video-player__play-btn { width: 64px; height: 64px; }
+  .video-player__play-ring--inner { inset: 10px; }
+  .video-player__play-icon { width: 24px; height: 24px; }
+  .video-player__play-label { font-size: 0.78rem; }
+  .video-player__ctrl-btn { width: 36px; height: 36px; }
+  .video-player__ctrl-btn i { width: 18px; height: 18px; }
+  .video-player__time { font-size: 0.72rem; }
+}
+
+@media (max-width: 480px) {
+  .video-institucional__highlights { display: none; }
+  .video-player__ctrl-left { gap: 0.4rem; }
+  .video-player__time { display: none; }
 }
