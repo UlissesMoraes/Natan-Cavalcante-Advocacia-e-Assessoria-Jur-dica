@@ -1,0 +1,26 @@
+══════════════════════════════════════════════════════════════
+  PASTA DE LOGOS — Natan Cavalcante Advocacia
+══════════════════════════════════════════════════════════════
+
+Coloque aqui os arquivos de logo da empresa:
+
+┌─────────────────────────────────────────────────────────┐
+│  logo-principal.png  →  Logo horizontal completa         │
+│                         Usada no: Header + Footer        │
+│                         Formato recomendado: PNG (fundo  │
+│                         transparente) ou SVG             │
+│                         Tamanho ideal: 300×100 px        │
+├─────────────────────────────────────────────────────────┤
+│  brasao.png          →  Brasão / Logomarca isolada       │
+│                         Usada no: Hero + Seção Sobre     │
+│                         Formato recomendado: PNG (fundo  │
+│                         transparente) ou SVG             │
+│                         Tamanho ideal: 500×500 px        │
+└─────────────────────────────────────────────────────────┘
+
+DICA: O site já exibe a logo automaticamente quando os
+arquivos forem colocados nesta pasta com os nomes acima.
+Enquanto os arquivos não existirem, o site exibe o
+logotipo em SVG gerado automaticamente como fallback.
+
+══════════════════════════════════════════════════════════════

@@ -1,0 +1,34 @@
+══════════════════════════════════════════════════════════════
+  PASTA DE VÍDEOS — Natan Cavalcante Advocacia
+══════════════════════════════════════════════════════════════
+
+Coloque aqui os arquivos de vídeo do escritório:
+
+┌─────────────────────────────────────────────────────────┐
+│  video-hero.mp4      →  Vídeo de fundo do Hero          │
+│                         Aparece como fundo animado na   │
+│                         seção principal (topo do site)  │
+│                         Formato: MP4 (H.264)            │
+│                         Resolução ideal: 1920×1080      │
+│                         Duração recomendada: 15-30s     │
+│                         (loop automático, sem som)      │
+│                         Ex: escritório, cidade, justiça │
+├─────────────────────────────────────────────────────────┤
+│  video-institucional.mp4 →  Vídeo institucional         │
+│                         Aparece na seção "Conheça o     │
+│                         Escritório" com player premium  │
+│                         Formato: MP4 (H.264)            │
+│                         Resolução ideal: 1280×720       │
+│                         Duração recomendada: 1-3 min    │
+│                         Ex: apresentação do Dr. Natan,  │
+│                         estrutura do escritório, cases  │
+└─────────────────────────────────────────────────────────┘
+
+DICA: Enquanto os vídeos não forem adicionados, o site
+exibe placeholders premium no lugar deles. Ao colocar
+os arquivos com os nomes acima, os vídeos aparecem
+automaticamente sem precisar alterar o código.
+
+Formatos aceitos: .mp4 (recomendado), .webm, .ogg
+
+══════════════════════════════════════════════════════════════

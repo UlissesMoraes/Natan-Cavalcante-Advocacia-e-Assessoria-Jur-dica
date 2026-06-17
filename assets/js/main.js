@@ -8,6 +8,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initLucideIcons();
   initHeader();
+  initVideoPlayer();
   initMobileMenu();
   initParticles();
   initRevealObserver();
@@ -426,6 +427,119 @@ function initGSAP() {
       }
     });
   }
+}
+
+/* ── Vídeo Institucional Player ── */
+function initVideoPlayer() {
+  const video       = document.getElementById('video-inst');
+  const overlay     = document.getElementById('video-overlay');
+  const placeholder = document.getElementById('video-placeholder');
+  const controls    = document.getElementById('video-controls');
+  const playBtn     = document.getElementById('vid-play');
+  const muteBtn     = document.getElementById('vid-mute');
+  const fullBtn     = document.getElementById('vid-fullscreen');
+  const progressBar = document.getElementById('video-progress');
+  const progressFill= document.getElementById('progress-fill');
+  const progressThumb = document.getElementById('progress-thumb');
+  const currentTime = document.getElementById('vid-current');
+  const duration    = document.getElementById('vid-duration');
+  const playIcon    = document.getElementById('play-icon');
+  const muteIcon    = document.getElementById('mute-icon');
+  const playerWrap  = document.getElementById('video-player');
+
+  if (!video) return;
+
+  const fmt = s => {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60).toString().padStart(2, '0');
+    return `${m}:${sec}`;
+  };
+
+  const hasRealSource = () => {
+    const sources = video.querySelectorAll('source');
+    return sources.length > 0;
+  };
+
+  // Check if video actually loads
+  video.addEventListener('loadedmetadata', () => {
+    if (placeholder) placeholder.style.display = 'none';
+    if (duration) duration.textContent = fmt(video.duration);
+  });
+
+  video.addEventListener('error', () => {
+    if (placeholder) placeholder.style.display = 'flex';
+    if (overlay) overlay.style.display = 'none';
+  });
+
+  // Play/pause via overlay
+  const togglePlay = () => {
+    if (video.paused) {
+      video.play();
+      if (overlay) overlay.classList.add('hidden');
+      playerWrap?.classList.add('playing');
+      if (playIcon) { playIcon.setAttribute('data-lucide', 'pause'); lucide?.createIcons(); }
+    } else {
+      video.pause();
+      if (overlay) overlay.classList.remove('hidden');
+      playerWrap?.classList.remove('playing');
+      if (playIcon) { playIcon.setAttribute('data-lucide', 'play'); lucide?.createIcons(); }
+    }
+  };
+
+  overlay?.addEventListener('click', togglePlay);
+  overlay?.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePlay(); } });
+  playBtn?.addEventListener('click', togglePlay);
+  video.addEventListener('click', togglePlay);
+
+  // Mute toggle
+  muteBtn?.addEventListener('click', () => {
+    video.muted = !video.muted;
+    if (muteIcon) {
+      muteIcon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
+      lucide?.createIcons();
+    }
+  });
+
+  // Fullscreen
+  fullBtn?.addEventListener('click', () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      playerWrap?.requestFullscreen?.();
+    }
+  });
+
+  // Progress update
+  video.addEventListener('timeupdate', () => {
+    if (!video.duration) return;
+    const pct = (video.currentTime / video.duration) * 100;
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressThumb) progressThumb.style.left = pct + '%';
+    if (currentTime) currentTime.textContent = fmt(video.currentTime);
+  });
+
+  // Click on progress bar to seek
+  progressBar?.addEventListener('click', e => {
+    if (!video.duration) return;
+    const rect = progressBar.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    video.currentTime = pct * video.duration;
+  });
+
+  // Video ended
+  video.addEventListener('ended', () => {
+    if (overlay) overlay.classList.remove('hidden');
+    playerWrap?.classList.remove('playing');
+    if (playIcon) { playIcon.setAttribute('data-lucide', 'play'); lucide?.createIcons(); }
+    video.currentTime = 0;
+  });
+
+  // Show placeholder by default if no video loads
+  setTimeout(() => {
+    if (video.readyState === 0 && placeholder) {
+      placeholder.style.display = 'flex';
+    }
+  }, 1500);
 }
 
 /* ── Cursor Glow (desktop) ── */

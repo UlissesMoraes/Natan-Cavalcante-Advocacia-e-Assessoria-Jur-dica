@@ -90,7 +90,14 @@
     <div class="container header__inner">
       <a href="#inicio" class="header__logo" aria-label="Natan Cavalcante Advocacia - Página Inicial">
         <div class="logo-mark">
-          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <img
+            src="assets/images/logo/logo-principal.png"
+            alt="Natan Cavalcante Advocacia"
+            class="logo-mark__img"
+            width="48" height="48"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+          />
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
             <rect width="48" height="48" rx="4" fill="#4A0000"/>
             <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#C9A86A">NC</text>
             <rect x="8" y="38" width="32" height="1.5" fill="#C9A86A" opacity="0.6"/>
@@ -109,6 +116,7 @@
           <li><a href="#sobre" class="nav__link">Sobre</a></li>
           <li><a href="#diferenciais" class="nav__link">Diferenciais</a></li>
           <li><a href="#depoimentos" class="nav__link">Depoimentos</a></li>
+          <li><a href="#video" class="nav__link">Vídeo</a></li>
           <li><a href="#contato" class="nav__link">Contato</a></li>
         </ul>
       </nav>
@@ -132,6 +140,17 @@
   <!-- ═══════════════════════════════ HERO ═══════════════════════════════ -->
   <section class="hero" id="inicio" aria-label="Apresentação do escritório">
     <div class="hero__bg" aria-hidden="true">
+      <!-- Vídeo 1: coloque o arquivo em assets/videos/video-hero.mp4 -->
+      <video
+        class="hero__video"
+        autoplay muted loop playsinline
+        aria-hidden="true"
+        preload="metadata"
+        onerror="this.style.display='none'"
+      >
+        <source src="assets/videos/video-hero.mp4" type="video/mp4" />
+        <source src="assets/videos/video-hero.webm" type="video/webm" />
+      </video>
       <div class="hero__overlay"></div>
       <div class="hero__particles" id="particles" aria-hidden="true"></div>
       <div class="hero__grid" aria-hidden="true"></div>
@@ -188,7 +207,15 @@
           <div class="hero__logo-ring hero__logo-ring--outer"></div>
           <div class="hero__logo-ring hero__logo-ring--inner"></div>
           <div class="hero__logo-center">
-            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Brasão: coloque o arquivo em assets/images/logo/brasao.png -->
+            <img
+              src="assets/images/logo/brasao.png"
+              alt="Brasão Natan Cavalcante Advocacia"
+              class="hero__logo-img"
+              width="120" height="120"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+            />
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
               <rect width="120" height="120" rx="12" fill="#4A0000"/>
               <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Cinzel, serif" font-size="56" font-weight="700" fill="#C9A86A">NC</text>
               <rect x="20" y="95" width="80" height="2" fill="#C9A86A" opacity="0.5"/>
@@ -330,7 +357,15 @@
           <div class="sobre__frame-corner sobre__frame-corner--bl"></div>
           <div class="sobre__frame-corner sobre__frame-corner--br"></div>
           <div class="sobre__logo-large">
-            <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Brasão: coloque o arquivo em assets/images/logo/brasao.png -->
+            <img
+              src="assets/images/logo/brasao.png"
+              alt="Brasão Natan Cavalcante Advocacia"
+              class="sobre__logo-img"
+              width="160" height="160"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+            />
+            <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
               <rect width="160" height="160" rx="16" fill="#1a0000"/>
               <rect x="1" y="1" width="158" height="158" rx="15" stroke="#C9A86A" stroke-width="1.5" stroke-dasharray="8 4"/>
               <text x="50%" y="48%" dominant-baseline="middle" text-anchor="middle" font-family="Cinzel, serif" font-size="72" font-weight="700" fill="#C9A86A">NC</text>
@@ -645,6 +680,137 @@
     </div>
   </section>
 
+  <!-- ═══════════════════════════════ VÍDEO INSTITUCIONAL ═══════════════════════════════ -->
+  <section class="video-institucional" id="video" aria-labelledby="video-title">
+    <div class="video-institucional__bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="section__header reveal-up">
+        <span class="section__eyebrow">Conheça o Escritório</span>
+        <h2 class="section__title" id="video-title">Veja Como Podemos Ajudar Você</h2>
+        <p class="section__subtitle">Um breve panorama do nosso escritório, nossa forma de trabalhar e os resultados que entregamos a cada cliente.</p>
+        <div class="section__divider" aria-hidden="true">
+          <span></span><i data-lucide="play-circle" aria-hidden="true"></i><span></span>
+        </div>
+      </div>
+
+      <div class="video-institucional__wrapper reveal-up">
+        <div class="video-player" id="video-player">
+          <!-- Vídeo 2: coloque o arquivo em assets/videos/video-institucional.mp4 -->
+          <video
+            id="video-inst"
+            class="video-player__media"
+            preload="metadata"
+            poster=""
+            aria-label="Vídeo institucional do escritório Natan Cavalcante Advocacia"
+          >
+            <source src="assets/videos/video-institucional.mp4" type="video/mp4" />
+            <source src="assets/videos/video-institucional.webm" type="video/webm" />
+            Seu navegador não suporta vídeos HTML5.
+          </video>
+
+          <!-- Placeholder exibido antes de colocar o vídeo -->
+          <div class="video-player__placeholder" id="video-placeholder" aria-hidden="true">
+            <div class="video-player__placeholder-inner">
+              <div class="video-player__placeholder-icon">
+                <i data-lucide="film"></i>
+              </div>
+              <p class="video-player__placeholder-text">Adicione o arquivo <strong>video-institucional.mp4</strong><br>na pasta <code>assets/videos/</code></p>
+            </div>
+          </div>
+
+          <!-- Overlay com play button -->
+          <div class="video-player__overlay" id="video-overlay" role="button" tabindex="0" aria-label="Reproduzir vídeo institucional">
+            <div class="video-player__play-btn" aria-hidden="true">
+              <div class="video-player__play-ring video-player__play-ring--outer"></div>
+              <div class="video-player__play-ring video-player__play-ring--inner"></div>
+              <svg class="video-player__play-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <span class="video-player__play-label">Assistir apresentação</span>
+          </div>
+
+          <!-- Controles customizados -->
+          <div class="video-player__controls" id="video-controls" aria-label="Controles do vídeo" role="toolbar">
+            <div class="video-player__progress-wrap">
+              <div class="video-player__progress" id="video-progress" role="slider" aria-label="Progresso do vídeo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                <div class="video-player__progress-fill" id="progress-fill"></div>
+                <div class="video-player__progress-thumb" id="progress-thumb"></div>
+              </div>
+            </div>
+            <div class="video-player__ctrl-row">
+              <div class="video-player__ctrl-left">
+                <button class="video-player__ctrl-btn" id="vid-play" aria-label="Play/Pause">
+                  <i data-lucide="play" id="play-icon"></i>
+                </button>
+                <div class="video-player__time" aria-live="polite">
+                  <span id="vid-current">0:00</span>
+                  <span class="video-player__time-sep">/</span>
+                  <span id="vid-duration">0:00</span>
+                </div>
+                <button class="video-player__ctrl-btn" id="vid-mute" aria-label="Mudo/Som">
+                  <i data-lucide="volume-2" id="mute-icon"></i>
+                </button>
+              </div>
+              <div class="video-player__ctrl-right">
+                <button class="video-player__ctrl-btn" id="vid-fullscreen" aria-label="Tela cheia">
+                  <i data-lucide="maximize-2"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar de destaques ao lado do vídeo -->
+        <div class="video-institucional__highlights">
+          <h3 class="video-institucional__highlights-title">O que você vai ver:</h3>
+          <ul class="video-institucional__highlights-list">
+            <li>
+              <div class="vi-highlight">
+                <div class="vi-highlight__icon" aria-hidden="true"><i data-lucide="building-2"></i></div>
+                <div>
+                  <strong>Estrutura do escritório</strong>
+                  <span>Conheça nossa equipe e instalações</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vi-highlight">
+                <div class="vi-highlight__icon" aria-hidden="true"><i data-lucide="message-square-quote"></i></div>
+                <div>
+                  <strong>Filosofia de atendimento</strong>
+                  <span>Como tratamos cada caso com exclusividade</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vi-highlight">
+                <div class="vi-highlight__icon" aria-hidden="true"><i data-lucide="trophy"></i></div>
+                <div>
+                  <strong>Casos de sucesso</strong>
+                  <span>Resultados reais para clientes reais</span>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="vi-highlight">
+                <div class="vi-highlight__icon" aria-hidden="true"><i data-lucide="scale"></i></div>
+                <div>
+                  <strong>Áreas de especialização</strong>
+                  <span>Como atuamos em cada área do direito</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <a href="https://wa.me/5592990000000?text=Olá,%20assisti%20o%20vídeo%20e%20gostaria%20de%20falar%20com%20um%20advogado" class="btn btn--gold" target="_blank" rel="noopener noreferrer" style="margin-top:1.5rem; width:100%; justify-content:center">
+            <i data-lucide="message-circle" aria-hidden="true"></i>
+            Falar com o Dr. Natan
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════════════════════════ CTA PRINCIPAL ═══════════════════════════════ -->
   <section class="cta-section" aria-labelledby="cta-title">
     <div class="cta-section__bg" aria-hidden="true">
@@ -749,7 +915,14 @@
       <div class="container footer__top-inner">
         <div class="footer__brand">
           <div class="footer__logo">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <img
+              src="assets/images/logo/logo-principal.png"
+              alt="Natan Cavalcante Advocacia"
+              class="footer__logo-img"
+              width="48" height="48"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
+            />
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
               <rect width="48" height="48" rx="4" fill="#4A0000"/>
               <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle" font-family="Cinzel, serif" font-size="22" font-weight="700" fill="#C9A86A">NC</text>
               <rect x="8" y="38" width="32" height="1.5" fill="#C9A86A" opacity="0.6"/>
