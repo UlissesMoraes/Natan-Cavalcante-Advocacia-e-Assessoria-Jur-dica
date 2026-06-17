@@ -1,26 +1,26 @@
 ══════════════════════════════════════════════════════════════
-  PASTA DE LOGOS — Natan Cavalcante Advocacia
+  PASTA DE LOGO — Natan Cavalcante Advocacia
 ══════════════════════════════════════════════════════════════
 
-Coloque aqui os arquivos de logo da empresa:
+Coloque aqui UM único arquivo com a logo/brasão da empresa:
 
 ┌─────────────────────────────────────────────────────────┐
-│  logo-principal.png  →  Logo horizontal completa         │
-│                         Usada no: Header + Footer        │
-│                         Formato recomendado: PNG (fundo  │
-│                         transparente) ou SVG             │
-│                         Tamanho ideal: 300×100 px        │
-├─────────────────────────────────────────────────────────┤
-│  brasao.png          →  Brasão / Logomarca isolada       │
-│                         Usada no: Hero + Seção Sobre     │
-│                         Formato recomendado: PNG (fundo  │
-│                         transparente) ou SVG             │
-│                         Tamanho ideal: 500×500 px        │
+│  logo.png            →  Logo / Brasão do escritório      │
+│                         (mesmo arquivo usado em todos    │
+│                         os locais do site)               │
+│                                                          │
+│  Formato: PNG com fundo transparente (recomendado)       │
+│  Tamanho mínimo: 400×400 px                              │
+│  O site adapta o tamanho automaticamente em cada seção   │
 └─────────────────────────────────────────────────────────┘
 
-DICA: O site já exibe a logo automaticamente quando os
-arquivos forem colocados nesta pasta com os nomes acima.
-Enquanto os arquivos não existirem, o site exibe o
-logotipo em SVG gerado automaticamente como fallback.
+Onde a logo aparece no site:
+  • Header (topo) ........... 48×48 px
+  • Hero (destaque central).. 120×120 px
+  • Seção Sobre ............. 160×160 px
+  • Footer (rodapé) ......... 48×48 px
+
+Enquanto o arquivo não existir, o site exibe um logotipo
+em SVG gerado automaticamente como fallback.
 
 ══════════════════════════════════════════════════════════════

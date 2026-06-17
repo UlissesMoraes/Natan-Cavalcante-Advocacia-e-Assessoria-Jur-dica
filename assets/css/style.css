@@ -2013,35 +2013,64 @@ blockquote { font-style: italic; }
 }
 
 /* ══════════════════════════════════════════════
-   LOGO IMAGE OVERRIDES
+   LOGO IMAGE — arquivo único: assets/images/logo/logo.png
 ══════════════════════════════════════════════ */
+
+/* Header — brasão pequeno ao lado do nome */
 .logo-mark__img {
   width: 48px;
   height: 48px;
   object-fit: contain;
+  object-position: center;
   border-radius: 4px;
+  filter: drop-shadow(0 2px 8px rgba(201, 168, 106, 0.25));
 }
 
+/* Hero — brasão grande em destaque com efeito iluminado */
 .hero__logo-img {
   width: 120px;
   height: 120px;
   object-fit: contain;
+  object-position: center;
   display: block;
+  filter:
+    drop-shadow(0 0 20px rgba(201, 168, 106, 0.35))
+    drop-shadow(0 0 50px rgba(74, 0, 0, 0.5));
 }
 
+/* Sobre — brasão no frame decorativo */
 .sobre__logo-img {
   width: 160px;
   height: 160px;
   object-fit: contain;
+  object-position: center;
   display: block;
+  filter: drop-shadow(0 4px 20px rgba(201, 168, 106, 0.2));
 }
 
+/* Footer — brasão pequeno ao lado do nome */
 .footer__logo-img {
   width: 48px;
   height: 48px;
   object-fit: contain;
+  object-position: center;
   border-radius: 4px;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(201, 168, 106, 0.2));
+}
+
+/* Remove fundo escuro do hero logo-center quando é imagem real */
+.hero__logo-center:has(.hero__logo-img[src]) {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  padding: 0.5rem;
+}
+
+/* Remove fundo do sobre__logo-large quando é imagem real */
+.sobre__logo-large:has(.sobre__logo-img[src]) {
+  background: transparent;
+  box-shadow: none;
 }
 
 /* ══════════════════════════════════════════════
