@@ -434,7 +434,6 @@ function initVideoPlayer() {
   const video       = document.getElementById('video-inst');
   const overlay     = document.getElementById('video-overlay');
   const placeholder = document.getElementById('video-placeholder');
-  const controls    = document.getElementById('video-controls');
   const playBtn     = document.getElementById('vid-play');
   const muteBtn     = document.getElementById('vid-mute');
   const fullBtn     = document.getElementById('vid-fullscreen');
@@ -442,12 +441,15 @@ function initVideoPlayer() {
   const progressFill= document.getElementById('progress-fill');
   const progressThumb = document.getElementById('progress-thumb');
   const currentTime = document.getElementById('vid-current');
-  const duration    = document.getElementById('vid-duration');
+  const durationEl  = document.getElementById('vid-duration');
   const playIcon    = document.getElementById('play-icon');
   const muteIcon    = document.getElementById('mute-icon');
   const playerWrap  = document.getElementById('video-player');
+  const controls    = document.getElementById('video-controls');
 
   if (!video) return;
+
+  const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
 
   const fmt = s => {
     const m = Math.floor(s / 60);
@@ -455,61 +457,128 @@ function initVideoPlayer() {
     return `${m}:${sec}`;
   };
 
-  const hasRealSource = () => {
-    const sources = video.querySelectorAll('source');
-    return sources.length > 0;
+  const setPlayIcon = playing => {
+    if (!playIcon) return;
+    playIcon.setAttribute('data-lucide', playing ? 'pause' : 'play');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   };
 
-  // Check if video actually loads
-  video.addEventListener('loadedmetadata', () => {
-    if (placeholder) placeholder.style.display = 'none';
-    if (duration) duration.textContent = fmt(video.duration);
-  });
+  /* ── Mostrar / esconder controles no mobile ── */
+  let ctrlTimer = null;
+  const showControls = () => {
+    if (!controls) return;
+    controls.style.opacity = '1';
+    controls.style.transform = 'translateY(0)';
+    clearTimeout(ctrlTimer);
+    if (!video.paused) {
+      ctrlTimer = setTimeout(hideControls, 3000);
+    }
+  };
+  const hideControls = () => {
+    if (!controls || video.paused) return;
+    controls.style.opacity = '0';
+    controls.style.transform = 'translateY(6px)';
+  };
 
-  video.addEventListener('error', () => {
-    if (placeholder) placeholder.style.display = 'flex';
-    if (overlay) overlay.style.display = 'none';
-  });
-
-  // Play/pause via overlay
-  const togglePlay = () => {
-    if (video.paused) {
-      video.play();
+  /* ── Play / Pause ── */
+  const play = () => {
+    const promise = video.play();
+    if (promise !== undefined) {
+      promise
+        .then(() => {
+          if (overlay) overlay.classList.add('hidden');
+          playerWrap?.classList.add('playing');
+          setPlayIcon(true);
+          showControls();
+        })
+        .catch(err => {
+          // Autoplay bloqueado ou erro — mantém overlay visível
+          console.warn('Video play failed:', err);
+          if (overlay) overlay.classList.remove('hidden');
+          playerWrap?.classList.remove('playing');
+          setPlayIcon(false);
+        });
+    } else {
       if (overlay) overlay.classList.add('hidden');
       playerWrap?.classList.add('playing');
-      if (playIcon) { playIcon.setAttribute('data-lucide', 'pause'); lucide?.createIcons(); }
-    } else {
-      video.pause();
-      if (overlay) overlay.classList.remove('hidden');
-      playerWrap?.classList.remove('playing');
-      if (playIcon) { playIcon.setAttribute('data-lucide', 'play'); lucide?.createIcons(); }
+      setPlayIcon(true);
+      showControls();
     }
   };
 
-  overlay?.addEventListener('click', togglePlay);
-  overlay?.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePlay(); } });
-  playBtn?.addEventListener('click', togglePlay);
-  video.addEventListener('click', togglePlay);
+  const pause = () => {
+    video.pause();
+    if (overlay) overlay.classList.remove('hidden');
+    playerWrap?.classList.remove('playing');
+    setPlayIcon(false);
+    showControls();
+  };
 
-  // Mute toggle
-  muteBtn?.addEventListener('click', () => {
+  const togglePlay = () => {
+    if (video.paused) play(); else pause();
+  };
+
+  /* ── Eventos de clique / toque ── */
+  // Overlay (botão play central)
+  const addTouchClick = (el, fn) => {
+    if (!el) return;
+    el.addEventListener('click', fn);
+    el.addEventListener('touchend', e => { e.preventDefault(); fn(); });
+  };
+
+  addTouchClick(overlay, togglePlay);
+  addTouchClick(playBtn, e => { e?.stopPropagation(); togglePlay(); });
+
+  // Toque no player quando vídeo está tocando → mostra/oculta controles
+  playerWrap?.addEventListener('touchstart', () => {
+    if (!video.paused) showControls();
+  }, { passive: true });
+
+  // Teclado
+  overlay?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePlay(); }
+  });
+
+  /* ── Mute ── */
+  addTouchClick(muteBtn, () => {
     video.muted = !video.muted;
     if (muteIcon) {
       muteIcon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
-      lucide?.createIcons();
+      if (typeof lucide !== 'undefined') lucide.createIcons();
     }
+    showControls();
   });
 
-  // Fullscreen
-  fullBtn?.addEventListener('click', () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
+  /* ── Fullscreen ── */
+  addTouchClick(fullBtn, () => {
+    const el = playerWrap;
+    if (!el) return;
+    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
+    const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      exit.call(document);
     } else {
-      playerWrap?.requestFullscreen?.();
+      req.call(el);
     }
+    showControls();
   });
 
-  // Progress update
+  /* ── Barra de progresso — clique e toque ── */
+  const seek = clientX => {
+    if (!video.duration) return;
+    const rect = progressBar.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+    video.currentTime = pct * video.duration;
+    showControls();
+  };
+
+  progressBar?.addEventListener('click', e => seek(e.clientX));
+  progressBar?.addEventListener('touchstart', e => {
+    e.preventDefault();
+    seek(e.touches[0].clientX);
+  }, { passive: false });
+
+  /* ── Atualiza progresso ── */
   video.addEventListener('timeupdate', () => {
     if (!video.duration) return;
     const pct = (video.currentTime / video.duration) * 100;
@@ -518,28 +587,32 @@ function initVideoPlayer() {
     if (currentTime) currentTime.textContent = fmt(video.currentTime);
   });
 
-  // Click on progress bar to seek
-  progressBar?.addEventListener('click', e => {
-    if (!video.duration) return;
-    const rect = progressBar.getBoundingClientRect();
-    const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-    video.currentTime = pct * video.duration;
+  /* ── Metadata carregada ── */
+  video.addEventListener('loadedmetadata', () => {
+    if (placeholder) placeholder.style.display = 'none';
+    if (durationEl) durationEl.textContent = fmt(video.duration);
   });
 
-  // Video ended
+  /* ── Erro de carregamento ── */
+  video.addEventListener('error', () => {
+    if (placeholder) placeholder.style.display = 'flex';
+    if (overlay) overlay.style.display = 'none';
+  });
+
+  /* ── Fim do vídeo ── */
   video.addEventListener('ended', () => {
-    if (overlay) overlay.classList.remove('hidden');
-    playerWrap?.classList.remove('playing');
-    if (playIcon) { playIcon.setAttribute('data-lucide', 'play'); lucide?.createIcons(); }
+    pause();
     video.currentTime = 0;
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressThumb) progressThumb.style.left = '0%';
   });
 
-  // Show placeholder by default if no video loads
+  /* ── Placeholder se vídeo não carregou após 2s ── */
   setTimeout(() => {
     if (video.readyState === 0 && placeholder) {
       placeholder.style.display = 'flex';
     }
-  }, 1500);
+  }, 2000);
 }
 
 /* ── Cursor Glow (desktop) ── */
